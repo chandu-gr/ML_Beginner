@@ -8,6 +8,8 @@
             ctx = canvas.getContext("2d");
             w = canvas.width;
             h = canvas.height;
+            //canvas.fillStyle = "white";
+            //canvas.fillRect(0, 0, w, h);
             canvas.addEventListener("mousemove", function(e) {findXY('move', e)},false);
             canvas.addEventListener("mousedown", function(e) {findXY('down', e)},false);
             canvas.addEventListener("mouseup", function(e) {findXY('up', e)},false);
@@ -23,7 +25,29 @@
         
         function save() {
             document.getElementById("canvasimg").style.border = "2px solid";
-            var dataURL = canvas.toDataURL();
+            //var dataURL = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            //Test
+            destinationCanvas = document.createElement("canvas");
+            destinationCanvas.width = canvas.width;
+            destinationCanvas.height = canvas.height;
+
+            destCtx = destinationCanvas.getContext('2d');
+
+            //create a rectangle with the desired color
+            destCtx.fillStyle = "#FFFFFF";
+            destCtx.fillRect(0,0,canvas.width,canvas.height);
+
+            //draw the original canvas onto the destination canvas
+            destCtx.drawImage(canvas, 0, 0);
+
+            //finally use the destinationCanvas.toDataURL() method to get the desired output;
+            destinationCanvas.toDataURL();
+            var dataURL = destinationCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            //Test
+            var link = document.createElement('a');
+            link.download = "my-digit.png";
+            link.href = dataURL;
+            link.click();
             document.getElementById("canvasimg").src = dataURL;
             document.getElementById("canvasimg").style.display = "inline";
         }
