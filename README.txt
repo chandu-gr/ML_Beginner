@@ -1,1 +1,0 @@
-ML small projects for Beginners
